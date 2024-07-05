@@ -1,0 +1,12 @@
+mattoid-store-auto-check-in:
+  # For more details on the format
+  # Checkout https://docs.flarum.org/extend/i18n/#appendix-a-standard-key-format
+  admin:
+    settings:
+      group-view: Display products to users
+
+  forum:
+    title: Auto CheckIn Card
+
+    error:
+      auto-check-in-fail: The automatic check-in of user [{username}] failed with reason：{message}

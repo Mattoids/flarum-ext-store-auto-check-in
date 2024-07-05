@@ -1,0 +1,12 @@
+mattoid-store-auto-check-in:
+  # For more details on the format
+  # Checkout https://docs.flarum.org/extend/i18n/#appendix-a-standard-key-format
+  admin:
+    settings:
+      group-view: 对用户展示商品
+
+  forum:
+    title: 自动签到卡
+
+    error:
+      auto-check-in-fail: 用户【{username}】自动签到失败，失败原因：{message}
