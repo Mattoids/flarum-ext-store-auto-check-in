@@ -7,7 +7,7 @@
     "license": "GPL-1.0-or-later",
     "require": {
         "flarum/core": "^1.2.0",
-        "mattoid/flarum-ext-store": "^1.0",
+        "mattoid/flarum-ext-store": "*",
         "ziiven/flarum-daily-check-in": "^0.3.7"
     },
     "authors": [
