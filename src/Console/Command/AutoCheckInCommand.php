@@ -45,7 +45,7 @@ class AutoCheckInCommand extends AbstractCommand
         })->where('status', 1)->where('code', 'autoCheckIn')->groupBy('user_id')->get();
 
         foreach ($cartList as $cart) {
-            $user = User::query()->where('id',$cart->user_id)->where('last_checkin_time' <= Carbon::now()->format('Y-m-d')->tz($this->storeTimezone))->first();
+            $user = User::query()->where('id',$cart->user_id)->where('last_checkin_time' < Carbon::now()->format('Y-m-d')->tz($this->storeTimezone))->first();
             if (!$user) {
                 continue;
             }
