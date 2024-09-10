@@ -39,10 +39,16 @@ class AutoCheckInCommand extends AbstractCommand
     protected function fire()
     {
         $datetime = Carbon::now()->tz($this->storeTimezone);
-        $cartList = StoreCartModel::query()->where('outtime', '>=', $datetime)->where('status', 1)->where('code', 'autoCheckIn')->groupBy('user_id')->get();
+        $cartList = StoreCartModel::query()->where(function($where) use ($datetime) {
+            $where->where('outtime', '>=', $datetime);
+            $where->orWhere('type', '=', 'permanent');
+        })->where('status', 1)->where('code', 'autoCheckIn')->groupBy('user_id')->get();
 
         foreach ($cartList as $cart) {
-            $user = User::query()->where('id',$cart->user_id)->first();
+            $user = User::query()->where('id',$cart->user_id)->where('last_checkin_time' <= Carbon::now()->format('Y-m-d')->tz($this->storeTimezone))->first();
+            if (!$user) {
+                continue;
+            }
             try {
                 $data = [
                     'id' => $user->id,
