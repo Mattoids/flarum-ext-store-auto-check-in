@@ -18,12 +18,17 @@ class AutoCheckInCommand extends AbstractCommand
     protected $events;
     protected $settings;
 
+    private $storeTimezone = 'Asia/Shanghai';
+
     public function __construct(SettingsRepositoryInterface $settings, TranslatorInterface $translator, Repository $cache, Dispatcher $events) {
         parent::__construct();
         $this->cache = $cache;
         $this->events = $events;
         $this->settings = $settings;
         $this->translator = $translator;
+
+        $storeTimezone = $this->settings->get('mattoid-store.storeTimezone', 'Asia/Shanghai');
+        $this->storeTimezone = !!$storeTimezone ? $storeTimezone : 'Asia/Shanghai';
     }
 
     protected function configure()
@@ -33,7 +38,7 @@ class AutoCheckInCommand extends AbstractCommand
 
     protected function fire()
     {
-        $datetime = Carbon::now()->tz($this->settings->get('mattoid-store.storeTimezone','Asia/Shanghai'));
+        $datetime = Carbon::now()->tz($this->storeTimezone);
         $cartList = StoreCartModel::query()->where('outtime', '>=', $datetime)->where('status', 1)->where('code', 'autoCheckIn')->groupBy('user_id')->get();
 
         foreach ($cartList as $cart) {
