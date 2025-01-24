@@ -15,8 +15,10 @@ use Flarum\User\Event\Saving;
 
 class AutoCheckInCommand extends AbstractCommand
 {
+    protected $cache;
     protected $events;
     protected $settings;
+    protected $translator;
 
     private $storeTimezone = 'Asia/Shanghai';
 
